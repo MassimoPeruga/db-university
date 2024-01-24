@@ -18,7 +18,8 @@ Neuroscienze
         `degrees`
     JOIN `departments` ON `degrees`.`department_id` = `departments`.`id`
     WHERE
-        `departments`.`name` = 'Dipartimento di Neuroscienze';
+        `degrees`.`level` = "magistrale"
+    AND `departments`.`name` = 'Dipartimento di Neuroscienze';
 _________________________________________________________
 
 3. Selezionare tutti i corsi in cui insegna Fulvio Amato (id=44)
@@ -94,11 +95,10 @@ filtrare i tentativi con voto minimo 18.
     JOIN `exam_student` ON `students`.`id` = `exam_student`.`student_id`
     JOIN `exams` ON `exam_student`.`exam_id` = `exams`.`id`
     JOIN `courses` ON `exams`.`course_id` = `courses`.`id`
-    WHERE
-        `exam_student`.`vote` >= 18
     GROUP BY
         `students`.`id`,
-        `courses`.`id`;
+        `courses`.`id`
+    HAVING MIN(`exam_student`.`vote`) >= 18
 
 NOTA: apparentemente nessuno studente ha mai rifiutato un voto sopra al 18 per cui il numero dei tentativi sarà sempre 1
 _________________________________________________________
